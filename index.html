@@ -1,119 +1,91 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Générateur de Citations - Cyrano de Bergerac</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-      background-color: #f4f4f9;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de citations de Cyrano de Bergerac</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
 
-    h1 {
-      font-size: 28px;
-      color: #2c3e50;
-      margin-bottom: 20px;
-    }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
-    .quote-container {
-      background-color: #ffffff;
-      border: 2px solid #bdc3c7;
-      border-radius: 10px;
-      padding: 30px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      margin: 0 auto;
-    }
+        p {
+            font-size: 20px;
+            font-style: italic;
+            margin: 20px 0;
+        }
 
-    .quote-text {
-      font-size: 22px;
-      color: #2c3e50;
-      margin-bottom: 15px;
-      font-style: italic;
-    }
+        #quoteText {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin: 30px;
+            min-height: 100px;
+        }
 
-    .quote-author {
-      font-size: 18px;
-      color: #7f8c8d;
-    }
+        button {
+            font-size: 18px;
+            padding: 15px 30px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #2980b9;
-    }
-  </style>
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
 
-  <h1>Générateur de Citations - Cyrano de Bergerac</h1>
+    <h1>Générateur de citations de Cyrano de Bergerac</h1>
+    
+    <button id="generateButton" onclick="generateQuote()">Générateur de rêves</button>
+    
+    <div id="quoteText"></div>
 
-  <div class="quote-container">
-    <div class="quote-text" id="quoteText">"Mais… chanter, rêver, rire, passer, être seul, être libre…"</div>
-    <div class="quote-author" id="quoteAuthor">— Cyrano de Bergerac</div>
-  </div>
+    <script>
+        // Liste des citations de Cyrano de Bergerac
+        const quotes = [
+            "Mais… chanter\nRêver, rire, passer, être seul, être libre,\nAvoir l’œil qui regarde bien, la voix qui vibre,\nMettre, quand il vous plaît, son feutre de travers,\nPour un oui, pour un non, se battre, — ou faire un vers\nTravailler sans souci de gloire ou de fortune,\nÀ tel voyage, auquel on pense, dans la lune !",
+            "Un baiser, mais à tout prendre, qu'est-ce ?\nUn serment fait d'un peu plus près, une promesse\nPlus précise, un aveu qui se veut confirmer,\nUn point rose qu'on met sur l'i du verbe aimer;\nC'est un secret qui prend la bouche pour oreille,\nUn instant d'infini qui fait un bruit d'abeille,\nUne communion ayant un goût de fleur,\nUne façon d'un peu se respirer le coeur,\nEt d'un peu se goûter, au bord des lèvres, l'âme !",
+            "Il y a beaucoup de gens dont la facilité de parler ne vient que de l'impuissance de se taire.",
+            "Sois satisfait des fleurs, des fruits, même des feuilles,\nSi c'est dans ton jardin à toi que tu les cueilles !",
+            "Ne le plaignez pas trop : il a vécu sans pactes,\nLibre dans sa pensée autant que dans ses actes.",
+            "Mais on ne se bat pas dans l'espoir du succès ! Non, non c'est bien plus beau lorsque c'est inutile !",
+            "Mais oui, c’est adorable. On se devine à peine.\nVous voyez la noirceur d’un long manteau qui traîne,\nJ’aperçois la blancheur d’une robe d’été :\nMoi je ne suis qu’une ombre, et vous qu’une clarté !",
+            "Veux-tu me compléter et que je te complète ?\nTu marcheras, j’irai dans l’ombre à ton côté :\nJe serai ton esprit, tu seras ma beauté.",
+            "Baiser. Le mot est doux !\nJe ne vois pas pourquoi votre lèvre ne l’ose ;\nS’il la brûle déjà, que sera-ce la chose ?",
+            "CHRISTIAN : Las ! je suis sot à m'en tuer de honte !\nCYRANO : Mais non, tu ne l'es pas puisque tu t'en rends compte.",
+            "La lune, dans le ciel, luisait comme une montre,\nQuand soudain, je ne sais quel soigneux horloger\nS’étant mis à passer un coton nuager\nSur le boîtier d’argent de cette montre ronde,\nIl se fit une nuit la plus noire du monde.",
+            "C'est la nuit qu'il est beau de croire à la lumière.",
+            "Je crains tant que parmi notre alchimie exquise\nLe vrai du sentiment ne se volatilise,\nQue l’âme ne se vide à ces passe-temps vains,\nEt que le fin du fin ne soit la fin des fins !"
+        ];
 
-  <button id="generateButton" onclick="generateQuote()">Générateur de rêves</button>
+        // Fonction pour générer une citation aléatoire
+        function generateQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quoteText = quotes[randomIndex];
+            document.getElementById("quoteText").innerText = "${quoteText}";
 
-  <script>
-    // Liste des citations de Cyrano de Bergerac (remplaçant les citations précédentes)
-    const quotes = [
-      "Mais… chanter, rêver, rire, passer, être seul, être libre,\nAvoir l’œil qui regarde bien, la voix qui vibre,\nMettre, quand il vous plaît, son feutre de travers,\nPour un oui, pour un non, se battre, — ou faire un vers\nTravailler sans souci de gloire ou de fortune,\nA tel voyage, auquel on pense, dans la lune !\nN’écrire jamais rien qui de soi ne sortît,\nEt modeste, d’ailleurs, se dire : « Mon petit,\nSois satisfait des fleurs, des fruits, même des feuilles\nSi c’est dans ton jardin à toi que tu les cueilles ! »\nPuis, s’il advient d’un peu triompher, par hasard,\nNe pas être obligé d’en rien rendre à César,\nVis-à-vis de soi-même en garder le mérite,\nBref, dédaignant d’être le lierre parasite,\nLors même qu’on n’est pas le chêne ou le tilleul,\nNe pas monter bien haut, peut-être, mais tout seul…",
-      "Un baiser, mais à tout prendre, qu'est-ce?\nUn serment fait d'un peu plus près, une promesse\nPlus précise, un aveu qui se veut confirmer,\nUn point rose qu'on met sur l'i du verbe aimer;\nC'est un secret qui prend la bouche pour oreille,\nUn instant d'infini qui fait un bruit d'abeille,\nUne communion ayant un goût de fleur,\nUne façon d'un peu se respirer le cœur,\nEt d'un peu se goûter, au bord des lèvres, l'âme!",
-      "Il y a beaucoup de gens dont la facilité de parler ne vient que de l'impuissance de se taire.",
-      "Sois satisfait des fleurs, des fruits, même des feuilles,\nSi c'est dans ton jardin à toi que tu les cueilles !",
-      "Ne le plaignez pas trop : il a vécu sans pactes,\nLibre dans sa pensée autant que dans ses actes.",
-      "Mais on ne se bat pas dans l'espoir du succès ! Non, non c'est bien plus beau lorsque c'est inutile !",
-      "Mais oui, c’est adorable. On se devine à peine.\nVous voyez la noirceur d’un long manteau qui traîne,\nJ’aperçois la blancheur d’une robe d’été :\nMoi je ne suis qu’une ombre, et vous qu’une clarté !\nLe Bret : Eh ! mon Dieu, quelle est donc cette femme ?\nCyrano : Un danger\nMortel sans le vouloir, exquis sans y songer,\nUn piège de nature, une rose muscade\nDans laquelle l'amour se tient en embuscade !",
-      "Veux-tu me compléter et que je te complète ?\nTu marcheras, j’irai dans l’ombre à ton côté :\nJe serai ton esprit, tu seras ma beauté.",
-      "Baiser. Le mot est doux !\nJe ne vois pas pourquoi votre lèvre ne l’ose ;\nS’il la brûle déjà, que sera-ce la chose ?\nNe vous en faites pas un épouvantement\nN’avez-vous pas tantôt, presque insensiblement,\nQuité le badinage et glissé sans alarmes\nDe sourire au soupir, et du soupir aux larmes !",
-      "CHRISTIAN : Las ! je suis sot à m'en tuer de honte !\nCYRANO : Mais non, tu ne l'es pas puisque tu t'en rends compte.",
-      "Réfléchis, voyons. Il m'interdit\nLe rêve d'être aimé même par une laide,\nCe nez qui d'un quart d'heure en tous lieux me précède ;\nRegarde moi, mon cher, et dis quelle espérance\nPourrait bien me laisser cette protubérance !",
-      "Vous ?.....Au contraire !\nJ' ignorais la douceur féminine. Ma mère\nNe m' a pas trouvé beau. Je n' ai pas eu de soeur .\nPlus tard, j' ai redouté l' amante à l' oeil moqueur\nJe vous dois d' avoir eu, tout au moins, une amie.\nGrâce à vous une robe a passé dans ma vie .",
-      "La lune, dans le ciel, luisait comme une montre,\nQuand soudain, je ne sais quel soigneux horloger\nS’étant mis à passer un coton nuager\nSur le boîtier d’argent de cette montre ronde,\nIl se fit une nuit la plus noire du monde.",
-      "ROXANE : Vos mots sont hésitants. Pourquoi ?\nCYRANO : C’est qu’il fait nuit,\nDans cette ombre, à tâtons, ils cherchent votre oreille.\nROXANE : Les miens n’éprouvent pas difficulté pareille.\nCYRANO : Ils trouvent tout de suite ? oh ! cela va de soi,\nPuisque c’est dans mon cœur, eux, que je les reçois ;\nOr, moi, j’ai le cœur grand, vous, l’oreille petite.\nD’ailleurs vos mots à vous descendent : ils vont plus vite,\nLes miens montent, Madame : il leur faut plus de temps !",
-      "CARBON : C’est un Gascon pourtant !\nLE PREMIER CADET : Un faux !… Méfiez-vous !\nParce que, les Gascons… ils doivent être fous :\nRien de plus dangereux qu’un Gascon raisonnable.",
-      "Eh bien ! oui, c'est mon vice. Déplaire est mon plaisir. J'aime qu'on me haïsse.",
-      "Travailler sans souci de gloire ou de fortune,\nÀ tel voyage, auquel on pense, dans la lune !\nN’écrire jamais rien qui de soi ne sortît,\nEt modeste d’ailleurs, se dire : mon petit,\nSois satisfait des fleurs, des fruits, même des feuilles,\nSi c’est dans ton jardin à toi que tu les cueilles !\nPuis, s’il advient d’un peu triompher, par hasard,\nNe pas être obligé d’en rien rendre à César,\nVis-à-vis de soi-même en garder le mérite,\nBref, dédaignant d’être le lierre parasite,\nLors même qu’on n’est pas le chêne ou le tilleul,\nNe pas monter bien haut, peut-être, mais tout seul !",
-      "Que Montfleury s'en aille,\nOu bien je l'essorille et le désentripaille !",
-      "Moi, c’est moralement que j’ai mes élégances. Je ne m’attife pas ainsi qu’un freluquet, mais je suis plus soigné si je suis moins coquet; je ne sortirais pas avec, par négligence, un affront pas très bien lavé, la conscience jaune encor de sommeil dans le coin de son œil, un honneur chiffonné, des scrupules en deuil. Mais je marche sans rien sur moi qui ne reluise, empanaché d’indépendance et de franchise; ce n’est pas une taille avantageuse, c’est mon âme que je cambre ainsi qu’en un corset, et tout couvert d’exploits qu’en rubans je m’attache, retroussant mon esprit ainsi qu’une moustache, je dais, en traversant les groupes et les ronds, sonner les vérités comme des éperons.",
-      "Je crains tant que parmi notre alchimie exquise\nLe vrai du sentiment ne se volatilise,\nQue l’âme ne se vide à ces passe-temps vains,\nEt que le fin du fin ne soit la fin des fins !",
-      "C'est la nuit qu'il est beau de croire à la lumière.",
-      "Eh bien! Ecrivons la,\nCette lettre d'amour qu'en moi-même j'ai faite\nEt refaite cent fois, de sorte qu'elle est prête\nEt que mettant mon âme à côté du papier,\nJe n'ai tout simplement qu'à la recopier.",
-      "Ah ! non, cela, jamais ! Non, ce serait trop laid,\nSi le long de ce nez une larme coulait !\nJe ne laisserai pas, tant que j'en serai maître,\nLa divine beauté des larmes se commettre\nAvec tant de laideur grossière !... Vois-tu bien,\nLes larmes, il n'est rien de plus sublime, rien\n Et je ne voudrais pas qu'excitant la risée,\nUne seule, par moi, fût ridiculisée !...",
-      "Oh! je ne me fais pas d'illusion-Parbleu,\nOui, quelquefois je m'attendris dans le soir bleu;\nJ'entre dans quelque jardin où l'heure se parfume;\nAvec mon pauvre grand diable de nez je hume\nL'avril,- je suis des yeux ,sous un rayon d'argent,\nAu bras d'un cavalier,quelque femme,en songeant\nQue pour marcher, à petits pas, dans la lune,\nAussi moi j'aimerais au bras en avoir une,\nJe m'exalte, j'oublie ...et j'aperçois soudain\nL'ombre de mon profil sur le mur du jardin!"
-    ];
-
-    // Fonction pour générer une citation aléatoire
-    function generateQuote() {
-      // Choisir un index aléatoire de la liste des citations
-      const randomIndex = Math.floor(Math.random() * quotes.length);
-      const quoteText = quotes[randomIndex];
-
-      // Afficher la citation
-      document.getElementById("quoteText").innerText = "${quoteText}";
-
-      // Change de couleur pour le bouton à chaque clic
-      const button = document.getElementById("generateButton");
-      const colors = ["#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6"];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      button.style.backgroundColor = randomColor;
-    }
-  </script>
+            // Changer la couleur du bouton à chaque clic
+            const button = document.getElementById("generateButton");
+            const colors = ["#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6"];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            button.style.backgroundColor = randomColor;
+        }
+    </script>
 
 </body>
 </html>
