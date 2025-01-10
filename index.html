@@ -80,8 +80,7 @@
         function generateQuote() {
             const randomIndex = Math.floor(Math.random() * quotes.length);
             const quoteText = quotes[randomIndex];
-            document.getElementById("quote").innerText = "${quoteText}";
-
+            document.getElementById("quote").innerText = quoteText;
             // Changer la couleur du bouton à chaque clic
             const button = document.getElementById("generateButton");
             const colors = ["#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6"];
